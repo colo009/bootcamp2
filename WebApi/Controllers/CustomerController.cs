@@ -28,13 +28,13 @@ public class CustomerController : BaseApiController
     [HttpPost("add")]
     public IActionResult Add([FromBody] Customer customer)
     {
-        return Ok(_customerRepository.Add(customer.Name));
+        return Ok(_customerRepository.Add(customer.FirstName));
     }
 
     [HttpPut("update")]
     public IActionResult Update([FromBody] Customer customer)
     {
-        return Ok(_customerRepository.Update(customer.Id, customer.Name));
+        return Ok(_customerRepository.Update(customer.Id, customer.FirstName));
     }
 
     [HttpDelete("{id}")]

@@ -6,8 +6,8 @@ namespace Infrastructure.Repositories;
 public class CustomerRepository : ICustomerRepository
 {
     private static List<Customer> _customers = [
-        new(){ Id = 1, Name = "Jose" },
-        new(){ Id = 2, Name = "Juan" },
+        new(){ Id = 1, FirstName = "Jose" },
+        new(){ Id = 2, FirstName = "Juan" },
 ];
 
     public List<Customer> Add(string name)
@@ -15,7 +15,7 @@ public class CustomerRepository : ICustomerRepository
         var newCustomer = new Customer
         {
             Id = _customers.Max(x => x.Id) + 1,
-            Name = name
+            FirstName = name
         };
         _customers.Add(newCustomer);
 
@@ -53,7 +53,7 @@ public class CustomerRepository : ICustomerRepository
 
         if (customer is null) throw new Exception("No se encontro con el id solicitado");
 
-        customer.Name = name;
+        customer.FirstName = name;
 
         return _customers;
     }
