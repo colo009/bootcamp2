@@ -20,9 +20,9 @@ public class CustomerController : BaseApiController
     }
 
     [HttpGet("{id}")]
-    public IActionResult Get([FromRoute] int id)
+    public async Task<IActionResult> Get([FromRoute] int id)
     {
-        return Ok(_customerRepository.Get(id));
+        return Ok(await _customerRepository.Get(id));
     }
 
     [HttpPost("add")]
@@ -32,14 +32,14 @@ public class CustomerController : BaseApiController
     }
 
     [HttpPut("update")]
-    public IActionResult Update([FromBody] Customer customer)
+    public async Task<IActionResult> Update([FromBody] Customer customer)
     {
-        return Ok(_customerRepository.Update(customer.Id, customer.FirstName));
+        return Ok(await _customerRepository.Update(customer.Id, customer.FirstName, customer.LastName));
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete([FromRoute] int id)
+    public async Task<IActionResult> Delete([FromRoute] int id)
     {
-        return Ok(_customerRepository.Delete(id));
+        return Ok(await _customerRepository.Delete(id));
     }
 }

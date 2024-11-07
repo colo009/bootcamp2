@@ -29,14 +29,25 @@ public class CustomerRepository : ICustomerRepository
         return await List();
     }
 
-    public List<CustomerDTO> Delete(int id)
+    public async Task<List<CustomerDTO>> Delete(int id)
     {
-        throw new NotImplementedException();
+        var entity = await VerifyExists(id);
+
+        _context.Customers.Remove(entity);
+        await _context.SaveChangesAsync();
+
+        return await List();
     }
 
-    public CustomerDTO Get(int id)
+    public async Task<CustomerDTO> Get(int id)
     {
-        throw new NotImplementedException();
+        var entity = await VerifyExists(id);
+
+        return new CustomerDTO
+        {
+            Id = id,
+            FullName = $"{entity.FirstName} {entity.LastName}"
+        };
     }
 
     public async Task<List<CustomerDTO>> List()
@@ -52,8 +63,23 @@ public class CustomerRepository : ICustomerRepository
         return dtos.ToList();
     }
 
-    public List<CustomerDTO> Update(int id, string name)
+    public async Task<List<CustomerDTO>> Update(int id, string firstName, string? lastName)
     {
-        throw new NotImplementedException();
+        var entity = await VerifyExists(id);
+
+        entity.FirstName = firstName;
+        entity.LastName = lastName;
+
+        _context.Customers.Update(entity);
+        await _context.SaveChangesAsync();
+
+        return await List();
+    }
+
+    private async Task<Customer> VerifyExists(int id)
+    {
+        var entity = await _context.Customers.FindAsync(id);
+        if (entity == null) throw new Exception("No se encontro con el id solicitado");
+        return entity;
     }
 }
