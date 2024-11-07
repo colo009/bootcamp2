@@ -14,9 +14,9 @@ public class CustomerController : BaseApiController
     }
 
     [HttpGet("list")]
-    public IActionResult List()
+    public async Task<IActionResult> List()
     {
-        return Ok(_customerRepository.List());
+        return Ok(await _customerRepository.List());
     }
 
     [HttpGet("{id}")]

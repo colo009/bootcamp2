@@ -1,60 +1,49 @@
-﻿using Core.Entities;
+﻿using Core.DTOs;
 using Core.Interfaces.Repositories;
+using Infrastructure.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
 public class CustomerRepository : ICustomerRepository
 {
-    private static List<Customer> _customers = [
-        new(){ Id = 1, FirstName = "Jose" },
-        new(){ Id = 2, FirstName = "Juan" },
-];
+    private readonly ApplicationDbContext _context;
 
-    public List<Customer> Add(string name)
+    public CustomerRepository(ApplicationDbContext context)
     {
-        var newCustomer = new Customer
+        _context = context;
+    }
+
+    public List<CustomerDTO> Add(string name)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<CustomerDTO> Delete(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public CustomerDTO Get(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<List<CustomerDTO>> List()
+    {
+        var entities = await _context.Customers.ToListAsync();
+
+        var dtos = entities.Select(customer => new CustomerDTO
         {
-            Id = _customers.Max(x => x.Id) + 1,
-            FirstName = name
-        };
-        _customers.Add(newCustomer);
+            Id = customer.Id,
+            FullName = $"{customer.FirstName} {customer.LastName}"
+        });
 
-        return _customers;
+        return dtos.ToList();
     }
 
-    public List<Customer> Delete(int id)
+    public List<CustomerDTO> Update(int id, string name)
     {
-        var customerToDelete = _customers.FirstOrDefault(x => x.Id == id);
-        
-        if (customerToDelete is null) throw new Exception("No se encontro con el id solicitado");
-
-        _customers.Remove(customerToDelete);
-
-        return _customers;
-    }
-
-    public Customer Get(int id)
-    {
-        var customer = _customers.FirstOrDefault(x => x.Id == id);
-
-        if (customer is null) throw new Exception("No se encontro con el id solicitado");
-
-        return customer;
-    }
-
-    public List<Customer> List()
-    {
-        return _customers;
-    }
-
-    public List<Customer> Update(int id, string name)
-    {
-        var customer = _customers.FirstOrDefault(x => x.Id == id);
-
-        if (customer is null) throw new Exception("No se encontro con el id solicitado");
-
-        customer.FirstName = name;
-
-        return _customers;
+        throw new NotImplementedException();
     }
 }
