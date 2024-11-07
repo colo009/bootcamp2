@@ -26,9 +26,9 @@ public class CustomerController : BaseApiController
     }
 
     [HttpPost("add")]
-    public IActionResult Add([FromBody] Customer customer)
+    public async Task<IActionResult> Add([FromBody] Customer customer)
     {
-        return Ok(_customerRepository.Add(customer.FirstName));
+        return Ok(await _customerRepository.Add(customer.FirstName, customer.LastName));
     }
 
     [HttpPut("update")]

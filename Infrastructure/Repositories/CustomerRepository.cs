@@ -1,4 +1,5 @@
 ﻿using Core.DTOs;
+using Core.Entities;
 using Core.Interfaces.Repositories;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -14,9 +15,18 @@ public class CustomerRepository : ICustomerRepository
         _context = context;
     }
 
-    public List<CustomerDTO> Add(string name)
+    public async Task<List<CustomerDTO>> Add(string firstName, string? lastName)
     {
-        throw new NotImplementedException();
+        var entity = new Customer
+        {
+            FirstName = firstName,
+            LastName = lastName
+        };
+
+        _context.Customers.Add(entity); //aqui no impactamos aun la BD
+        await _context.SaveChangesAsync(); //esto impacta en la BD
+
+        return await List();
     }
 
     public List<CustomerDTO> Delete(int id)
