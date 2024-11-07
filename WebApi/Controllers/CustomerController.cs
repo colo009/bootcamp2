@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interfaces.Repositories;
+using Core.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
@@ -14,7 +15,7 @@ public class CustomerController : BaseApiController
     }
 
     [HttpGet("list")]
-    public async Task<IActionResult> List()
+    public async Task<IActionResult> List([FromQuery] PaginationRequest request)
     {
         return Ok(await _customerRepository.List());
     }

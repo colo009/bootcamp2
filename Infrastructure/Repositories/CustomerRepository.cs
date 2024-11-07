@@ -57,7 +57,10 @@ public class CustomerRepository : ICustomerRepository
         var dtos = entities.Select(customer => new CustomerDTO
         {
             Id = customer.Id,
-            FullName = $"{customer.FirstName} {customer.LastName}"
+            FullName = $"{customer.FirstName} {customer.LastName}",
+            Phone = customer.Phone,
+            Email = customer.Email,
+            BirthDate = customer.BirthDate.ToShortDateString(),
         });
 
         return dtos.ToList();
