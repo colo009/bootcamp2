@@ -13,5 +13,10 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         entity
             .Property(x => x.FirstName)
             .IsRequired();
+
+        entity
+            .HasMany(x => x.Accounts)
+            .WithOne(x => x.Customer)
+            .HasForeignKey(x => x.CustomerId);
     }
 }

@@ -7,6 +7,7 @@ namespace Infrastructure.Contexts;
 public partial class ApplicationDbContext : DbContext
 {
     public DbSet<Customer> Customers { get; set; }
+    public DbSet<Account> Accounts { get; set; }
 
     public ApplicationDbContext()
     {
@@ -20,6 +21,7 @@ public partial class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new CustomerConfiguration());
+        modelBuilder.ApplyConfiguration(new AccountConfiguration());
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
