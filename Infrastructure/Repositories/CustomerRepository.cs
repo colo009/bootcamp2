@@ -2,6 +2,7 @@
 using Core.Entities;
 using Core.Interfaces.Repositories;
 using Infrastructure.Contexts;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
@@ -43,27 +44,14 @@ public class CustomerRepository : ICustomerRepository
     {
         var entity = await VerifyExists(id);
 
-        return new CustomerDTO
-        {
-            Id = id,
-            FullName = $"{entity.FirstName} {entity.LastName}"
-        };
+        return entity.Adapt<CustomerDTO>();
     }
 
     public async Task<List<CustomerDTO>> List()
     {
         var entities = await _context.Customers.ToListAsync();
 
-        var dtos = entities.Select(customer => new CustomerDTO
-        {
-            Id = customer.Id,
-            FullName = $"{customer.FirstName} {customer.LastName}",
-            Phone = customer.Phone,
-            Email = customer.Email,
-            BirthDate = customer.BirthDate.ToShortDateString(),
-        });
-
-        return dtos.ToList();
+        return entities.Adapt<List<CustomerDTO>>();
     }
 
     public async Task<List<CustomerDTO>> Update(int id, string firstName, string? lastName)
