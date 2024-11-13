@@ -116,7 +116,7 @@ Este README describe los endpoints disponibles para la gestión de tarjetas de c
 ### 6. **Consultar el historial de transacciones de una tarjeta**
    - **Endpoint:** `GET /api/cards/{cardId}/transactions`
    - **Descripción:** Obtiene un historial de transacciones (cargos y pagos) de la tarjeta de crédito.
-   - **Query Params (opcional):** `startDate`, `endDate`
+   - **Query Params:** `startDate`, `endDate`
    - **Response:**
      ```json
      [
