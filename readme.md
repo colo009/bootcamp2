@@ -6,11 +6,11 @@ Este README describe los endpoints disponibles para la gestión de tarjetas de c
 
 ### 1. **Crear una nueva tarjeta de crédito**
    - **Endpoint:** `POST /api/cards`
-   - **Descripción:** Emite una nueva tarjeta de crédito para un cliente específico.
+   - **Descripción:** Emite una nueva tarjeta de crédito para un cliente específico. Generar un número de tarjeta único, y retornar el número "enmascarado".
    - **Request Body:**
      ```json
      {
-       "customerId": "12345",
+       "customerId": 12345,
        "cardType": "Visa",
        "creditLimit": 10000,
        "expirationDate": "2025-12",
