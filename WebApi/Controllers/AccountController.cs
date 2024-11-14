@@ -15,7 +15,6 @@ public class AccountController : BaseApiController
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
-        throw new Exception("Ocurrio algo muy malo");
         return Ok(await _repository.GetById(id));
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Core.Interfaces.Repositories;
+using Core.Interfaces.Services;
 using Infrastructure.Contexts;
 using Infrastructure.Repositories;
+using Infrastructure.Services;
 using Mapster;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,7 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         services.AddRepositories();
+        services.AddServices();
         services.AddDatabase(configuration);
         services.AddMapping();
 
@@ -27,6 +30,14 @@ public static class DependencyInjection
     {
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<IAccountRepository, AccountRepository>();
+        services.AddScoped<ICardRepository, CardRepository>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddServices(this IServiceCollection services)
+    {
+        services.AddScoped<ICardService, CardService>();
 
         return services;
     }

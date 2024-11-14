@@ -8,6 +8,8 @@ public partial class ApplicationDbContext : DbContext
 {
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Account> Accounts { get; set; }
+    public DbSet<Card> Cards { get; set; }
+    public DbSet<Charge> Charges { get; set; }
 
     public ApplicationDbContext()
     {
@@ -22,6 +24,8 @@ public partial class ApplicationDbContext : DbContext
     {
         modelBuilder.ApplyConfiguration(new CustomerConfiguration());
         modelBuilder.ApplyConfiguration(new AccountConfiguration());
+        modelBuilder.ApplyConfiguration(new CardConfiguration());
+        modelBuilder.ApplyConfiguration(new ChargeConfiguration());
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

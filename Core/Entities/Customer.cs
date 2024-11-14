@@ -9,4 +9,5 @@ public class Customer
     public string? Phone { get; set; }
     public DateTime BirthDate { get; set; }
     public List<Account> Accounts { get; set; } = [];
+    public List<Card> Cards { get; set; } = [];
 }
