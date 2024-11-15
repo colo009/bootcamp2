@@ -1,136 +1,51 @@
-# API de Tarjetas de Crédito
 
-Este README describe los endpoints disponibles para la gestión de tarjetas de crédito en una API bancaria. A continuación se presentan los endpoints en inglés, pero las descripciones están en español para mayor claridad.
+# Ejercicio: Gestión de Entidades Operativas del Cliente
 
-## Endpoints
+## Descripción del Problema
 
-### 1. **Crear una nueva tarjeta de crédito**
-   - **Endpoint:** `POST /api/cards`
-   - **Descripción:** Emite una nueva tarjeta de crédito para un cliente específico. Generar un número de tarjeta único, y retornar el número "enmascarado".
-   - **Request Body:**
-     ```json
-     {
-       "customerId": 12345,
-       "cardType": "Visa",
-       "creditLimit": 10000,
-       "expirationDate": "2025-12",
-       "interestRate": 18.5
-     }
-     ```
-   - **Response:**
-     ```json
-     {
-       "cardId": "98765",
-       "customerId": "12345",
-       "cardNumber": "XXXX-XXXX-XXXX-1111",
-       "expirationDate": "2025-12",
-       "status": "active"
-     }
-     ```
+Diseña un sistema que permita guardar información sobre las entidades con las que opera un cliente y los productos que tiene asociados a cada entidad. Cada cliente puede interactuar con múltiples entidades, y cada entidad puede ofrecer diferentes productos al cliente.
 
-### 2. **Obtener información de una tarjeta de crédito**
-   - **Endpoint:** `GET /api/cards/{cardId}`
-   - **Descripción:** Consulta los detalles de una tarjeta de crédito específica, con el número de tarjeta enmascarado.
-   - **Response:**
-     ```json
-     {
-       "cardId": "98765",
-       "customerId": "12345",
-       "cardNumber": "XXXX-XXXX-XXXX-1111",
-       "expirationDate": "2025-12",
-       "status": "active",
-       "creditLimit": 10000,
-       "availableCredit": 8000,
-       "interestRate": 18.5
-     }
-     ```
+### Requerimientos Funcionales
 
-### 3. **Listar todas las tarjetas de un cliente**
-   - **Endpoint:** `GET /api/customers/{customerId}/cards`
-   - **Descripción:** Devuelve una lista de todas las tarjetas de crédito asociadas a un cliente, con los números de tarjeta enmascarados.
-   - **Response:**
-     ```json
-     [
-       {
-         "cardId": "98765",
-         "cardNumber": "XXXX-XXXX-XXXX-1111",
-         "expirationDate": "2025-12",
-         "creditLimit": 10000,
-         "availableCredit": 8000
-       },
-       {
-         "cardId": "12345",
-         "cardNumber": "XXXX-XXXX-XXXX-2222",
-         "expirationDate": "2026-05",
-         "creditLimit": 5000,
-         "availableCredit": 3000
-       }
-     ]
-     ```
+1. **Guardar entidades y productos del cliente:**
+   - Diseñar un endpoint que permita registrar las entidades financieras o comerciales con las que opera un cliente.
+   - Cada entidad debe estar asociada a una lista de productos específicos.
 
-### 4. **Realizar un cargo en una tarjeta de crédito**
-   - **Endpoint:** `POST /api/cards/{cardId}/charges`
-   - **Descripción:** Procesa un cargo a una tarjeta de crédito (por una compra).
-   - **Request Body:**
-     ```json
-     {
-       "amount": 150,
-       "description": "Compra en tienda",
-       "date": "2024-11-10"
-     }
-     ```
-   - **Response:**
-     ```json
-     {
-       "chargeId": "67890",
-       "cardId": "98765",
-       "amount": 150,
-       "availableCredit": 7850,
-       "description": "Compra en tienda",
-       "date": "2024-11-10"
-     }
-     ```
+2. **Consultar entidades y productos:**
+   - Diseñar un endpoint que permita consultar todas las entidades y productos asociados a un cliente.
 
-### 5. **Realizar un pago a una tarjeta de crédito**
-   - **Endpoint:** `POST /api/cards/{cardId}/payments`
-   - **Descripción:** Procesa un pago a una tarjeta de crédito (reducción de deuda).
-   - **Request Body:**
-     ```json
-     {
-       "amount": 200,
-       "paymentMethod": "bank transfer",
-       "date": "2024-11-11"
-     }
-     ```
-   - **Response:**
-     ```json
-     {
-       "paymentId": "54321",
-       "cardId": "98765",
-       "amount": 200,
-       "availableCredit": 8050,
-       "date": "2024-11-11"
-     }
-     ```
+### Ejemplo de Escenario
 
-### 6. **Consultar el historial de transacciones de una tarjeta**
-   - **Endpoint:** `GET /api/cards/{cardId}/transactions`
-   - **Descripción:** Obtiene un historial de transacciones (cargos y pagos) de la tarjeta de crédito.
-   - **Query Params:** `startDate`, `endDate`
-   - **Response:**
-     ```json
-     [
-       {
-         "type": "charge",
-         "amount": 150,
-         "description": "Compra en tienda",
-         "date": "2024-11-10"
-       },
-       {
-         "type": "payment",
-         "amount": 200,
-         "description": "Pago recibido",
-         "date": "2024-11-11"
-       }
-     ]
-     ```
+Un cliente opera con las siguientes entidades:
+- **Banco Sudameris**:
+  - Producto: Tarjeta de Crédito
+  - Producto: Préstamo Activo
+- **Claro**:
+  - Producto: Plan de Telefonía
+
+El sistema debe permitir almacenar esta información y, posteriormente, consultarla.
+
+### Consideraciones Técnicas
+
+1. Los estudiantes deben definir:
+   - El formato de los datos a almacenar (estructura de las entidades, productos y su relación con el cliente).
+   - Los detalles de los requests y responses de los endpoints.
+
+2. **Endpoints sugeridos**:
+   - `POST /api/customers/{customerId}/entities`  
+     Para registrar una entidad y sus productos asociados a un cliente.
+   - `GET /api/customers/{customerId}/entities`  
+     Para consultar las entidades y productos asociados a un cliente.
+
+3. El diseño debe ser flexible para admitir:
+   - Múltiples entidades por cliente.
+   - Múltiples productos por entidad.
+   - Actualización y eliminación de productos o entidades según sea necesario.
+
+4. Se debe considerar cómo manejar la relación entre cliente, entidades y productos de manera eficiente.
+
+### Objetivo del Ejercicio
+
+- Que los estudiantes diseñen las estructuras de datos necesarias.
+- Que definan los cuerpos de las solicitudes y respuestas en base a los requisitos.
+- Que implementen un modelo de relación entre cliente, entidades y productos.
