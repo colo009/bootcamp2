@@ -9,4 +9,5 @@ public interface ICustomerRepository
     Task<List<CustomerDTO>> Add(string firstName, string? lastName);
     Task<List<CustomerDTO>> Update(int id, string firstName, string? lastName);
     Task<List<CustomerDTO>> Delete(int id);
+    Task<CustomerProductsDTO> GetProducts(int id);
 }

@@ -43,4 +43,10 @@ public class CustomerController : BaseApiController
     {
         return Ok(await _customerRepository.Delete(id));
     }
+
+    [HttpGet("{id}/products")]
+    public async Task<IActionResult> GetProducts([FromRoute] int id)
+    {
+        return Ok(await _customerRepository.GetProducts(id));
+    }
 }

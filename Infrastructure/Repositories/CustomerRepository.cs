@@ -47,6 +47,24 @@ public class CustomerRepository : ICustomerRepository
         return entity.Adapt<CustomerDTO>();
     }
 
+    public async Task<CustomerProductsDTO> GetProducts(int id)
+    {
+        var customer = await VerifyExists(id);
+
+        if (customer is null) 
+            throw new Exception("No se encontro el cliente con el id solicitado");
+
+        var customerWithProducts = await _context.Customers
+            .Include(x => x.CustomerEntities)
+                .ThenInclude(x => x.Entity)
+            .Include(x => x.CustomerEntities)
+                .ThenInclude(x => x.CustomerEntityProducts)
+                    .ThenInclude(x => x.EntityProduct)
+            .FirstAsync(x => x.Id == id);
+
+        return customerWithProducts.Adapt<CustomerProductsDTO>();
+    }
+
     public async Task<List<CustomerDTO>> List()
     {
         var entities = await _context.Customers.ToListAsync();
